@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[2]:
 
 
 get_ipython().system('pip install psycopg2')
 get_ipython().system('pip install psycopg2-binary')
 
 
-# In[2]:
+# In[3]:
 
 
 import matplotlib
@@ -17,13 +17,13 @@ style.use('seaborn')
 import matplotlib.pyplot as plt
 
 
-# In[3]:
+# In[4]:
 
 
 import pandas as pd
 
 
-# In[4]:
+# In[5]:
 
 
 import sqlalchemy
@@ -33,7 +33,7 @@ from sqlalchemy import create_engine, MetaData, Table, Column, ForeignKey
 from sqlalchemy import create_engine, inspect
 
 
-# In[5]:
+# In[6]:
 
 
 #Connected to postgres database EmployeeSQL
@@ -46,14 +46,14 @@ uri = f"postgresql+psycopg2://{user}:{password}@{host}:{port}/{db}"
 uri
 
 
-# In[6]:
+# In[7]:
 
 
 # Declare a Base using `automap_base()`
 Base=automap_base()
 
 
-# In[7]:
+# In[8]:
 
 
 # Create engine using the uri
@@ -117,46 +117,46 @@ same_emp_no=session.query(*salary_title).filter(Salaries.emp_no==Titles_Current.
 same_emp_no
 
 
-# In[17]:
+# In[16]:
 
 
 # Create a dataframe from two Joined classes
 emp_salary_title_df=pd.DataFrame(same_emp_no, columns=['Employee Number','Salary', 'Title'])
 
 
-# In[19]:
+# In[17]:
 
 
 #Dropped Employee Number column from the dataframe
 emp_salary_title2_df=emp_salary_title_df.drop('Employee Number', 1)
 
 
-# In[20]:
+# In[18]:
 
 
 emp_salary_title2_df.head()
 
 
-# In[26]:
+# In[19]:
 
 
 emp_salary_title2_df.columns
 
 
-# In[29]:
+# In[20]:
 
 
 #changed Salary to an integer type variable
 emp_salary_title2_df['Salary']=emp_salary_title2_df['Salary'].astype(int)
 
 
-# In[30]:
+# In[21]:
 
 
 emp_salary_title2_df.dtypes
 
 
-# In[31]:
+# In[22]:
 
 
 #grouped dataframe by Title with Mean Salary 
@@ -165,7 +165,7 @@ title_salary_df=title_salary_df.mean()
 title_salary_df.head()
 
 
-# In[54]:
+# In[23]:
 
 
 #Created a dataframe from groupby
@@ -173,12 +173,11 @@ title_salary_df=pd.DataFrame(title_salary_df)
 title_salary_df
 
 
-# In[53]:
+# In[26]:
 
 
 #Created horizontal bar graph from data frame
-title_salary_df.iloc[::-1].plot.barh(title="Current Mean Salary by Title")
-plt.tight_layout()
+title_salary_df.iloc[::-1].plot.bar(title="Current Mean Salary by Title")
 plt.show()
 
 
